@@ -6,6 +6,16 @@ import pandas as pd
 import allel
 import malariagen_data
 import pathlib
+import logging
+
+# -----------------------------
+# Logging setup
+# -----------------------------
+logging.basicConfig(
+    filename="isafe_prep.log",
+    level=logging.INFO,
+    format="%(asctime)s %(message)s"
+)
 
 # -----------------------------
 # 1. Setup Af1 and sample sets
@@ -81,7 +91,7 @@ def make_isafe_inputs_for_region(
     out_dir = pathlib.Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    print(f"[*] {cohort_name} | {region} : loading haplotypes...")
+    logging.info(f"[*] {cohort_name} | {region} : loading haplotypes...")
     ds_haps = af1.haplotypes(
         region=region,
         analysis=analysis,
@@ -98,7 +108,7 @@ def make_isafe_inputs_for_region(
 
     n_missing = df_samples_phased["country"].isna().sum()
     if n_missing > 0:
-        print(
+        logging.info(
             f"    {cohort_name} | {region}: "
             f"{n_missing} samples in haplotypes have no metadata; ignored for cohort selection."
         )
@@ -108,14 +118,14 @@ def make_isafe_inputs_for_region(
     loc_cohort_samples = df_cohort.index.to_numpy()
 
     if len(loc_cohort_samples) == 0:
-        print(f"    {cohort_name} | {region}: no samples match cohort_query → skipping.")
+        logging.info(f"    {cohort_name} | {region}: no samples match cohort_query → skipping.")
         return
 
     # subset haplotypes
     ds_haps_cohort = ds_haps.isel(samples=loc_cohort_samples)
     cohort_sample_ids = ds_haps_cohort["sample_id"].values
 
-    print(
+    logging.info(
         f"    {cohort_name} | {region}: {len(cohort_sample_ids)} samples "
         f"({2*len(cohort_sample_ids)} haplotypes)"
     )
@@ -152,7 +162,7 @@ def make_isafe_inputs_for_region(
         for sid in cohort_sample_ids:
             f.write(f"{sid}\n")
 
-    print(
+    logging.info(
         f"    {cohort_name} | {region}: "
         f"{ht_np.shape[0]} SNPs, {ht_np.shape[1]} haplotypes "
         f"→ {prefix}.hap"
@@ -170,7 +180,7 @@ def main():
                     out_dir="prep_isafe_inputs",
                 )
             except Exception as e:
-                print(f"[ERROR] {cohort_name} | {region}: {e}")
+                logging.error(f"[ERROR] {cohort_name} | {region}: {e}")
 
 
 if __name__ == "__main__":
