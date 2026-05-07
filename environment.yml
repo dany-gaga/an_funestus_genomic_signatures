@@ -1,0 +1,14 @@
+name: malariagen-py311
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - python=3.11
+  - isafe
+  - hmmlearn
+  - plink
+  - admixture
+  - scikit-bio
+  - umap-learn
+prefix: /home/mrc.gm/hsaizonou/anaconda3/envs/malariagen-py311
