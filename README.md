@@ -42,12 +42,11 @@ funestus* genomic surveillance project, accessible via the
 [malariagen_data API](https://malariagen.github.io/malariagen-data-python/latest/Af1.html).
 
 ## Dependencies
-
-- Python 3.11
-- malariagen_data
-- numpy, pandas, scikit-allel
-- matplotlib, seaborn
-- iSAFE
+See `environment.yml` to reproduce the analysis environment:
+```bash
+conda env create -f environment.yml
+conda activate malariagen-py311
+```
 
 ## Citation
 
