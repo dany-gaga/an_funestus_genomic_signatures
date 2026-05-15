@@ -66,10 +66,6 @@ for region in regions_list:
     # Group by Parent (gene ID), contig, and strand, then apply the custom aggregation function
     consolidated_genes_df = region_mRNAs_df.groupby(['Parent', 'contig', 'strand'], as_index=False).apply(aggregate_gene_info, include_groups=False).reset_index()
 
-    # The 'Parent' from groupby becomes a column after reset_index()
-    # Now, rename 'ID' to 'Parent_ID' if you want to explicitly keep the original gene ID,
-    # and the 'ID' selected from the apply function as the representative mRNA ID.
-    # However, the user asked to match the original structure, where 'ID' is mRNA and 'Parent' is gene.
 
     # Reorder columns to match the original structure: ID will be mRNA ID, Parent will be gene ID
     region_contigs_df_final = consolidated_genes_df[[

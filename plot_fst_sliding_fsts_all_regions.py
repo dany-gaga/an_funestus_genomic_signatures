@@ -361,7 +361,7 @@ def make_region_figure(region, save=True):
     )
 
     # ===============================
-    # CLEAN AXES (REMOVE ALL BORDERS)
+    # CLEAN AXES
     # ===============================
     for ax in [ax_fst, ax_genes, ax_heat]:
 
