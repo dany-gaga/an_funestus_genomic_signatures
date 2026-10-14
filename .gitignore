@@ -1,1 +1,8 @@
 *.slurm
+# Generated figures and result files
+*.png
+*.tiff
+*.tif
+*.pdf
+*.xlsx
+*.csv
